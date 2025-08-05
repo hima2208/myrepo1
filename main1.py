@@ -5,6 +5,15 @@ import uvicorn
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Change this in production!
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 @app.post("/env-request")
 def create_env(data: EnvRequestCreate):
     request_id = create_env_request(data)
