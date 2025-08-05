@@ -1,5 +1,5 @@
 from pynamodb.models import Model
-from pynamodb.attributes import UnicodeAttribute
+from pynamodb.attributes import UnicodeAttribute, NumberAttribute, UnicodeSetAttribute
 from datetime import datetime
 import os
 
