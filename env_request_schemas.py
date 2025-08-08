@@ -1,3 +1,5 @@
+# env_request_schemas.py
+
 from pydantic import BaseModel, Field
 from typing import Optional
 
@@ -8,8 +10,8 @@ class EnvRequestCreate(BaseModel):
     data_domain: str
     instance_type: str
     ide_option: str
-    framework_option: str
-    requested_by: str
+    framework_option: Optional[str] = None
+    requested_by: Optional[str] = "anonymous"
     status: Optional[str] = "submitted"
 
 class EnvRequestRead(EnvRequestCreate):
