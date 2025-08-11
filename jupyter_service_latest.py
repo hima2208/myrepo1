@@ -5,11 +5,13 @@ import httpx
 from datetime import datetime, timedelta
 from typing import Dict, Optional
 from env_request_service import get_env_request_by_id
+from urllib.parse import quote 
 
 # Configuration
 JUPYTER_BASE_URL = "http://10.53.136.65:8888"
 JUPYTER_TOKEN = ""
-PRESIGNED_URL_EXPIRY_MINUTES = 30
+PRESIGNED_URL_EXPIRY_MINUTES = 1
+NOTEBOOK_REL_PATH = "notebooks/starter.ipynb"
 
 # In-memory store for active presigned tokens (replace with Redis in production)
 active_presigned_tokens: Dict[str, dict] = {}
@@ -63,7 +65,7 @@ class JupyterService:
         token_info["used_count"] += 1
         token_info["last_accessed"] = datetime.utcnow()
 
-        jupyter_url = f"{JUPYTER_BASE_URL}/lab?token={presigned_token}"
+        jupyter_url = f"{JUPYTER_BASE_URL}/lab/tree/{quote(NOTEBOOK_REL_PATH)}?token={presigned_token}"
         return RedirectResponse(url=jupyter_url, status_code=302)
 
     @staticmethod
