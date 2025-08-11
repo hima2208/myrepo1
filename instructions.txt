@@ -1,0 +1,6 @@
+podman rm -f xgboost-jupyter 2>/dev/null || true
+podman run -d --name xgboost-jupyter \
+  -p 8888:8888 \
+  -v /home/ssm-user/jupytercontainer-xgboost/workspace:/app:Z \
+  -v /home/ssm-user/jupytercontainer-xgboost/datasets:/app/data:Z \
+  localhost/xgboost-container:latest
