@@ -1,4 +1,5 @@
 podman rm -f xgboost-jupyter 2>/dev/null || true
+
 podman run -d --name xgboost-jupyter \
   -p 8888:8888 \
   -v /home/ssm-user/jupytercontainer-xgboost/workspace:/app:Z \
@@ -6,6 +7,15 @@ podman run -d --name xgboost-jupyter \
   localhost/xgboost-container:latest
 
 
+
 ---- downloading iris dataset -----
 
 wget https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv -O iris.csv
+
+---second option to run the container -----
+
+podman run -d --name xgboost-jupyter \
+  -p 8888:8888 \
+  -v /home/ssm-user/jupytercontainer-xgboost/workspace:/workspace/notebooks:Z \
+  localhost/xgboost-container:latest
+
