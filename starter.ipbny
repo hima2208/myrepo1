@@ -4,15 +4,15 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "# 🚀 Starter Notebook\n",
+    "# Starter Notebook\n",
     "\n",
     "**Environment:** Fraud Detection Sandbox (XGBoost)\n",
     "\n",
     "Welcome! This notebook is preloaded with common Data Science imports and some starter code for Exploratory Data Analysis (EDA) and plotting.\n",
     "\n",
     "## Tips\n",
-    "- Use `Shift+Enter` to run a cell\n",
-    "- Add new cells with the `+` button in the toolbar\n",
+    "- Use Shift+Enter to run a cell\n",
+    "- Add new cells with the + button in the toolbar\n",
     "- Modify imports or starter code as needed\n"
    ]
   },
@@ -22,7 +22,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "# 📦 Common Data Science Imports\n",
+    "# Common Data Science Imports\n",
     "import pandas as pd\n",
     "import numpy as np\n",
     "import matplotlib.pyplot as plt\n",
@@ -30,7 +30,7 @@
     "from sklearn.model_selection import train_test_split\n",
     "from sklearn.metrics import accuracy_score, confusion_matrix, classification_report\n",
     "\n",
-    "print('✅ Common DS imports loaded')"
+    "print('Common DS imports loaded')"
    ]
   },
   {
@@ -39,9 +39,9 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "# 🤖 Framework-Specific Imports (XGBoost)\n",
+    "# Framework-Specific Imports (XGBoost)\n",
     "import xgboost as xgb\n",
-    "print('✅ XGBoost imported, version:', xgb.__version__)"
+    "print('XGBoost imported, version:', xgb.__version__)"
    ]
   },
   {
@@ -50,9 +50,11 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "# 📂 Load Example Dataset\n",
-    "df = sns.load_dataset('iris')\n",
-    "print('Dataset shape:', df.shape)\n",
+    "# Load dataset from mounted host folder\n",
+    "CSV_FILE = \"/workspace/data/data.csv\"  # Adjust if filename differs\n",
+    "df = pd.read_csv(CSV_FILE)\n",
+    "\n",
+    "print(f\"Loaded: {CSV_FILE} | shape={df.shape}\")\n",
     "df.head()"
    ]
   },
@@ -62,7 +64,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "# 📊 EDA Skeleton\n",
+    "# EDA Skeleton\n",
     "print('--- Dataset Info ---')\n",
     "print(df.info())\n",
     "\n",
@@ -79,17 +81,18 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "# 📈 Plotting Stub\n",
+    "# Plotting Stub\n",
     "sns.set(style=\"whitegrid\")\n",
     "plt.figure(figsize=(8,4))\n",
-    "sns.histplot(df['sepal_length'], kde=True)\n",
-    "plt.title('Sepal Length Distribution')\n",
+    "sns.histplot(df[df.columns[0]], kde=True)\n",
+    "plt.title(f'{df.columns[0]} Distribution')\n",
     "plt.show()\n",
     "\n",
     "# Scatterplot Example\n",
-    "sns.scatterplot(x='sepal_length', y='petal_length', hue='species', data=df)\n",
-    "plt.title('Sepal vs Petal Length')\n",
-    "plt.show()"
+    "if df.shape[1] >= 2:\n",
+    "    sns.scatterplot(x=df.columns[0], y=df.columns[1], data=df)\n",
+    "    plt.title(f'{df.columns[0]} vs {df.columns[1]}')\n",
+    "    plt.show()"
    ]
   },
   {
@@ -98,10 +101,10 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "# 🧠 Your Code Starts Here\n",
     "# Train/test split example:\n",
-    "X = df.drop('species', axis=1)\n",
-    "y = df['species']\n",
+    "target_col = df.columns[-1]\n",
+    "X = df.drop(target_col, axis=1)\n",
+    "y = df[target_col]\n",
     "\n",
     "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
     "\n",
